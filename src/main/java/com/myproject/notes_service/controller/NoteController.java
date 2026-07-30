@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import jakarta.validation.Valid;
 
 @RestController
 public class NoteController {
@@ -18,7 +19,7 @@ public class NoteController {
     }
     @PostMapping("/notes")
     @ResponseStatus(HttpStatus.CREATED)
-    public Note createNote(@RequestBody CreateNoteRequest request) {
+    public Note createNote(@Valid @RequestBody CreateNoteRequest request) {
        return noteService.createNote(request);
     }
 }
