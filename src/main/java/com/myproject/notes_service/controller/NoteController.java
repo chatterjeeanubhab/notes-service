@@ -19,6 +19,7 @@ public class NoteController {
     }
     @PostMapping("/notes")
     @ResponseStatus(HttpStatus.CREATED)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public Note createNote(@Valid @RequestBody CreateNoteRequest request) {
        return noteService.createNote(request);
     }
