@@ -8,21 +8,26 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.validation.FieldError;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // Exception handling methods will be implemented here
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorResponse handleValidationExceptions(MethodArgumentNotValidException e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationExceptions(MethodArgumentNotValidException e,HttpServletRequest request) {
      
+     Map<String, String> errors = new HashMap<>();
+     for(FieldError error : e.getBindingResult().getFieldErrors()) {
+         errors.put(error.getField(), error.getDefaultMessage());
+     }
         return new ErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
             "Validation Failed",
             "Input validation failed",
-            "", 
-            e.getBindingResult().getFieldErrors().stream()
-                .collect(HashMap::new, (map, error) -> map.put(error.getField(), error.getDefaultMessage()), HashMap::putAll)
+            request.getRequestURI(), errors
         );
     }
 }
