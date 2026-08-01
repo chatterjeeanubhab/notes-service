@@ -1,11 +1,13 @@
 package com.myproject.notes_service.controller;
 
 import com.myproject.notes_service.dto.CreateNoteRequest;
+import com.myproject.notes_service.dto.UpdateNoteRequest;
 import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.service.NoteService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
@@ -28,5 +30,9 @@ public class NoteController {
     @GetMapping("/notes/{id}")
     public Note getNoteById(@PathVariable Long id) {
         return noteService.getNoteById(id);
+    }
+    @PutMapping("/notes/{id}")
+    public Note updateNote(@PathVariable Long id, @Valid @RequestBody UpdateNoteRequest request) {
+        return noteService.updateNote(id, request);
     }
 }
