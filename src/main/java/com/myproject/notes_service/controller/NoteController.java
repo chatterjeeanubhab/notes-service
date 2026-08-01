@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,7 +33,13 @@ public class NoteController {
         return noteService.getNoteById(id);
     }
     @PutMapping("/notes/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Note updateNote(@PathVariable Long id, @Valid @RequestBody UpdateNoteRequest request) {
         return noteService.updateNote(id, request);
+    }
+    @DeleteMapping("/notes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteNote(@PathVariable Long id) {
+        noteService.deleteNote(id);
     }
 }
