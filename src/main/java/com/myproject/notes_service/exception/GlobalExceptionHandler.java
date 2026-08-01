@@ -30,4 +30,14 @@ public class GlobalExceptionHandler {
             request.getRequestURI(), errors
         );
     }
+    @ExceptionHandler(NoteNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNoteNotFoundException(NoteNotFoundException e,HttpServletRequest request){
+        return new ErrorResponse(  LocalDateTime.now(),
+            HttpStatus.NOT_FOUND.value(),
+            "Note Not Found",
+            e.getMessage(),
+            request.getRequestURI(), new HashMap<>()
+        );
+    }
 }

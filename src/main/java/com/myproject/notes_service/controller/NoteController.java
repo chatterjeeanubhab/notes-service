@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 public class NoteController {
@@ -24,8 +25,8 @@ public class NoteController {
     public Note createNote(@Valid @RequestBody CreateNoteRequest request) {
        return noteService.createNote(request);
     }
-    @GetMapping("/notes")
-    public List<Note> getAllNotes(){
-        return noteService.getAllNotes();
+    @GetMapping("/notes/{id}")
+    public Note getNoteById(@PathVariable Long id) {
+        return noteService.getNoteById(id);
     }
 }
