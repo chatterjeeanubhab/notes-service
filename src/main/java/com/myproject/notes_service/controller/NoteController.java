@@ -5,11 +5,13 @@ import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.service.NoteService;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 public class NoteController {
@@ -21,5 +23,9 @@ public class NoteController {
     @ResponseStatus(HttpStatus.CREATED)
     public Note createNote(@Valid @RequestBody CreateNoteRequest request) {
        return noteService.createNote(request);
+    }
+    @GetMapping("/notes")
+    public List<Note> getAllNotes(){
+        return noteService.getAllNotes();
     }
 }
