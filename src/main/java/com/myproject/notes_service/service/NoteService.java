@@ -30,4 +30,8 @@ public class NoteService {
         note.setCategory(request.getCategory());
         return noteRepository.save(note);
     }
+    public void deleteNote(Long id){
+         Note note=noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
+         noteRepository.delete(note);
+    }
 }
