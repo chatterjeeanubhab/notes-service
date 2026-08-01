@@ -5,6 +5,7 @@ import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.repository.NoteRepository;
 
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class NoteService {
@@ -16,5 +17,8 @@ public class NoteService {
     public Note createNote(CreateNoteRequest request) {
       Note note=new Note(request.getTitle(), request.getDescription(), request.getCategory());
        return noteRepository.save(note);
+    }
+    public List<Note> getAllNotes(){
+      return noteRepository.findAll();
     }
 }
