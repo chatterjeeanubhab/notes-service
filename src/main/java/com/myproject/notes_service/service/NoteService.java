@@ -1,6 +1,7 @@
 package com.myproject.notes_service.service;
 
 import com.myproject.notes_service.dto.CreateNoteRequest;
+import com.myproject.notes_service.dto.UpdateNoteRequest;
 import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.repository.NoteRepository;
 import com.myproject.notes_service.exception.NoteNotFoundException;
@@ -21,5 +22,12 @@ public class NoteService {
     }
     public Note getNoteById(Long id) {
         return noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
+    }
+    public Note updateNote(Long id,UpdateNoteRequest request){
+        Note note=noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
+        note.setTitle(request.getTitle());
+        note.setDescription(request.getDescription());
+        note.setCategory(request.getCategory());
+        return noteRepository.save(note);
     }
 }
