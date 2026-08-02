@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 public class NoteController {
@@ -41,5 +43,9 @@ public class NoteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteNote(@PathVariable Long id) {
         noteService.deleteNote(id);
+    }
+    @GetMapping("/notes/search")
+    public List<Note> findByTitle(@RequestParam String title) {
+        return noteService.findByTitleIgnoreCase(title);
     }
 }
