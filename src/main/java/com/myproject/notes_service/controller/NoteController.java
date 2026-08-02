@@ -18,6 +18,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @RestController
 public class NoteController {
@@ -44,8 +46,12 @@ public class NoteController {
     public void deleteNote(@PathVariable Long id) {
         noteService.deleteNote(id);
     }
-    @GetMapping("/notes/search")
+    @GetMapping(value="/notes/search", params="title")
     public List<Note> findByTitle(@RequestParam String title) {
         return noteService.findByTitleIgnoreCase(title);
+    }
+     @GetMapping(value="/notes/search", params="category")
+    public List<Note> findByCategory(@RequestParam String category) {
+        return noteService.findByCategoryIgnoreCase(category);
     }
 }
