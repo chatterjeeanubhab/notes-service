@@ -10,4 +10,5 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<Note, Long> {
     // Repository methods for managing notes will be defined here
     List<Note> findByTitleContainingIgnoreCase(String title);
+    List<Note> findByCategoryContainingIgnoreCase(String category);
 }

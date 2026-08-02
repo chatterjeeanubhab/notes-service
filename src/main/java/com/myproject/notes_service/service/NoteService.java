@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 public class NoteService {
@@ -37,5 +38,8 @@ public class NoteService {
     }
     public List<Note> findByTitleIgnoreCase(String title) {
         return noteRepository.findByTitleContainingIgnoreCase(title);
+    }
+    public List<Note> findByCategoryIgnoreCase(String category){
+        return noteRepository.findByCategoryContainingIgnoreCase(category);
     }
 }
