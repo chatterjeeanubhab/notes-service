@@ -5,6 +5,7 @@ import com.myproject.notes_service.dto.UpdateNoteRequest;
 import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.repository.NoteRepository;
 import com.myproject.notes_service.exception.NoteNotFoundException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -33,5 +34,8 @@ public class NoteService {
     public void deleteNote(Long id){
          Note note=noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
          noteRepository.delete(note);
+    }
+    public List<Note> findByTitleIgnoreCase(String title) {
+        return noteRepository.findByTitleContainingIgnoreCase(title);
     }
 }
