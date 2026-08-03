@@ -20,7 +20,7 @@ public class NoteService {
     }
     public Note createNote(CreateNoteRequest request) {
       Note note=new Note(request.getTitle(), request.getDescription(), request.getCategory());
-       return noteRepository.save(note);
+      return noteRepository.save(note);
     }
     public Note getNoteById(Long id) {
         return noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));

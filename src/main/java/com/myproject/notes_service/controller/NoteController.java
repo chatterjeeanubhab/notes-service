@@ -2,6 +2,7 @@ package com.myproject.notes_service.controller;
 
 import com.myproject.notes_service.dto.CreateNoteRequest;
 import com.myproject.notes_service.dto.UpdateNoteRequest;
+import com.myproject.notes_service.dto.NoteResponse;
 import com.myproject.notes_service.entity.Note;
 import com.myproject.notes_service.service.NoteService;
 
@@ -29,17 +30,17 @@ public class NoteController {
     }
     @PostMapping("/notes")
     @ResponseStatus(HttpStatus.CREATED)
-    public Note createNote(@Valid @RequestBody CreateNoteRequest request) {
-       return noteService.createNote(request);
+    public NoteResponse createNote(@Valid @RequestBody CreateNoteRequest request) {
+       return new NoteResponse(noteService.createNote(request));
     }
     @GetMapping("/notes/{id}")
-    public Note getNoteById(@PathVariable Long id) {
-        return noteService.getNoteById(id);
+    public NoteResponse getNoteById(@PathVariable Long id) {
+        return new NoteResponse(noteService.getNoteById(id));
     }
     @PutMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Note updateNote(@PathVariable Long id, @Valid @RequestBody UpdateNoteRequest request) {
-        return noteService.updateNote(id, request);
+    public NoteResponse updateNote(@PathVariable Long id, @Valid @RequestBody UpdateNoteRequest request) {
+        return new NoteResponse(noteService.updateNote(id, request));
     }
     @DeleteMapping("/notes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -47,11 +48,11 @@ public class NoteController {
         noteService.deleteNote(id);
     }
     @GetMapping(value="/notes/search", params="title")
-    public List<Note> findByTitle(@RequestParam String title) {
-        return noteService.findByTitleIgnoreCase(title);
+    public List<NoteResponse> findByTitle(@RequestParam String title) {
+        return noteService.findByTitleIgnoreCase(title).stream().map(NoteResponse::new).collect(Collectors.toList());
     }
      @GetMapping(value="/notes/search", params="category")
-    public List<Note> findByCategory(@RequestParam String category) {
-        return noteService.findByCategoryIgnoreCase(category);
+    public List<NoteResponse> findByCategory(@RequestParam String category) {
+        return noteService.findByCategoryIgnoreCase(category).stream().map(NoteResponse::new).collect(Collectors.toList());
     }
 }
