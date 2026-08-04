@@ -39,9 +39,9 @@ public class NoteController {
     public NoteResponse createNote(@Valid @RequestBody CreateNoteRequest request) {
        return noteMapper.mapToResponse(noteService.createNote(request));
     }
-    @GetMapping(params = {"page", "size"})
-    public Page<NoteResponse> getAllNotes(@RequestParam int page,@RequestParam int size) {
-        return noteMapper.mapToResponsePage(noteService.getAllNotes(page,size));
+    @GetMapping(params = {"page", "size","sort"})
+    public Page<NoteResponse> getAllNotes(@RequestParam int page,@RequestParam int size,@RequestParam String sort) {
+        return noteMapper.mapToResponsePage(noteService.getAllNotes(page,size,sort));
     }
     @GetMapping("/{id}")
     public NoteResponse getNoteById(@PathVariable Long id) {
