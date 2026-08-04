@@ -7,6 +7,11 @@ import com.myproject.notes_service.repository.NoteRepository;
 import com.myproject.notes_service.exception.NoteNotFoundException;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,9 @@ public class NoteService {
     public Note createNote(CreateNoteRequest request) {
       Note note=new Note(request.getTitle(), request.getDescription(), request.getCategory());
       return noteRepository.save(note);
+    }
+    public Page<Note> getAllNotes(int page,int size) {
+        return noteRepository.findAll(PageRequest.of(page, size));
     }
     public Note getNoteById(Long id) {
         return noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));

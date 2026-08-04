@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import org.springframework.data.domain.Page;
 @Component
 public class NoteMapper{
     public NoteResponse mapToResponse(Note note) {
@@ -20,5 +21,11 @@ public class NoteMapper{
             noteResponses.add(mapToResponse(note));
         }
         return noteResponses;
+    }
+    public Page<NoteResponse> mapToResponsePage(Page<Note> notes) {
+        if (notes == null) {
+            return Page.empty();
+        }
+        return notes.map(this::mapToResponse);
     }
 }
