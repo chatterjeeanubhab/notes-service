@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 
 import org.springframework.stereotype.Service;
@@ -27,8 +28,9 @@ public class NoteService {
       Note note=new Note(request.getTitle(), request.getDescription(), request.getCategory());
       return noteRepository.save(note);
     }
-    public Page<Note> getAllNotes(int page,int size) {
-        return noteRepository.findAll(PageRequest.of(page, size));
+    public Page<Note> getAllNotes(int page,int size,String sort) {
+        String[] field=sort.split(",");
+        return noteRepository.findAll(PageRequest.of(page, size).withSort(Sort.Direction.fromString(field[1]), field[0]));
     }
     public Note getNoteById(Long id) {
         return noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
