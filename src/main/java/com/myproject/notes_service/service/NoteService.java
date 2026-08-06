@@ -3,8 +3,8 @@ package com.myproject.notes_service.service;
 import com.myproject.notes_service.dto.CreateNoteRequest;
 import com.myproject.notes_service.dto.UpdateNoteRequest;
 import com.myproject.notes_service.entity.Note;
-import com.myproject.notes_service.repository.NoteRepository;
 import com.myproject.notes_service.exception.NoteNotFoundException;
+import com.myproject.notes_service.repository.NoteRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.data.domain.PageRequest;
@@ -28,8 +28,14 @@ public class NoteService {
       Note note=new Note(request.getTitle(), request.getDescription(), request.getCategory());
       return noteRepository.save(note);
     }
-    public Page<Note> getAllNotes(int page,int size,String sort) {
+    public Page<Note> getAllNotes(int page,int size,String sort) throws NoSuchFieldException {
+       
         String[] field=sort.split(",");
+            try {
+             Note.class.getDeclaredField(field[0]);
+            } catch (NoSuchFieldException e) {
+            throw new NoSuchFieldException("Field:" + field[0] + " does not exist in Note entity");
+        }
         return noteRepository.findAll(PageRequest.of(page, size).withSort(Sort.Direction.fromString(field[1]), field[0]));
     }
     public Note getNoteById(Long id) {

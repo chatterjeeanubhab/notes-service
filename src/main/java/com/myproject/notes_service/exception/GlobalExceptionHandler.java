@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.validation.FieldError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import com.myproject.notes_service.exception.NoteNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,10 +41,21 @@ public class GlobalExceptionHandler {
             request.getRequestURI(), new HashMap<>()
         );
     }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e,HttpServletRequest request){
         return new ErrorResponse(  LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Invalid Argument",
+            e.getMessage(),
+            request.getRequestURI(), new HashMap<>()
+        );
+    }
+    @ExceptionHandler(NoSuchFieldException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleNoSuchFieldException(NoSuchFieldException e,HttpServletRequest request){
+            return new ErrorResponse(  LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
             "Invalid Argument",
             e.getMessage(),

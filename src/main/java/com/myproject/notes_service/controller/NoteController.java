@@ -40,7 +40,7 @@ public class NoteController {
        return noteMapper.mapToResponse(noteService.createNote(request));
     }
     @GetMapping(params = {"page", "size","sort"})
-    public Page<NoteResponse> getAllNotes(@RequestParam int page,@RequestParam int size,@RequestParam String sort) {
+    public Page<NoteResponse> getAllNotes(@RequestParam int page,@RequestParam int size,@RequestParam String sort) throws Exception {
         return noteMapper.mapToResponsePage(noteService.getAllNotes(page,size,sort));
     }
     @GetMapping("/{id}")
