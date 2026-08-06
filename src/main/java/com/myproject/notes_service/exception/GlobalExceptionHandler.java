@@ -40,4 +40,14 @@ public class GlobalExceptionHandler {
             request.getRequestURI(), new HashMap<>()
         );
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e,HttpServletRequest request){
+        return new ErrorResponse(  LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Invalid Argument",
+            e.getMessage(),
+            request.getRequestURI(), new HashMap<>()
+        );
+    }
 }
